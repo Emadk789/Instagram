@@ -79,6 +79,15 @@ class RegistrationViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    let loginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Have an Account?  Login", for: .normal)
+        button.setTitleColor(.gray, for: .normal)
+        button.backgroundColor = .systemRed
+
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     let stackView: UIStackView = {
         let stack = UIStackView()
         stack.distribution = .fillEqually
@@ -102,12 +111,17 @@ class RegistrationViewController: UIViewController {
         stackView.addArrangedSubview(passwordTextField)
         stackView.addArrangedSubview(signUpButton)
         view.addSubview(stackView)
+        view.addSubview(loginButton)
+        loginButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10).isActive = true
+        loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
+        loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
+        loginButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05).isActive = true
     }
     private func configurStackViewAnchors() {
         stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100).isActive = true
         stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25).isActive = true
         stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -300).isActive = true
+        stackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3).isActive = true
     }
 
 }
