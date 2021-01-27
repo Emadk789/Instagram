@@ -67,7 +67,7 @@ class RegistrationViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Sign UP", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .systemGreen
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.gray.cgColor
         
@@ -83,7 +83,6 @@ class RegistrationViewController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Have an Account?  Login", for: .normal)
         button.setTitleColor(.gray, for: .normal)
-        button.backgroundColor = .systemRed
 
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -99,11 +98,16 @@ class RegistrationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
+        usernameTextField.delegate = self
+        passwordTextField.delegate = self
+        emailTextField.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
         addSubViews()
         configurStackViewAnchors()
+        addTargets()
     }
     private func addSubViews() {
         stackView.addArrangedSubview(usernameTextField)
@@ -123,5 +127,31 @@ class RegistrationViewController: UIViewController {
         stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25).isActive = true
         stackView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3).isActive = true
     }
+    private func addTargets() {
+        signUpButton.addTarget(self, action: #selector(signUpButtonClicked), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonClicked), for: .touchUpInside)
+    }
+    @objc func signUpButtonClicked() {
+        print(#function)
+    }
+    @objc func loginButtonClicked() {
+        dismiss(animated: true)
+    }
 
+}
+
+extension RegistrationViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == passwordTextField {
+            passwordTextField.resignFirstResponder()
+            signUpButtonClicked()
+        }
+        else if textField == usernameTextField {
+            emailTextField.becomeFirstResponder()
+        }
+        else if textField == emailTextField {
+            passwordTextField.becomeFirstResponder()
+        }
+        return true
+    }
 }

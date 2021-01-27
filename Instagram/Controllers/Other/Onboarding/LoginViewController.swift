@@ -243,8 +243,9 @@ class LoginViewController: UIViewController {
     }
     @objc private func createAccountButtonClicked() {
         let vc = RegistrationViewController()
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: false, completion: nil)
+//        vc.modalPresentationStyle = .fullScreen
+        vc.title = "Create an Account"
+        present(UINavigationController(rootViewController: vc), animated: true, completion: nil)
     }
     @objc private func privacyButtonClicked() {
         guard let url = URL(string: "https://help.instagram.com/519522125107875") else {
