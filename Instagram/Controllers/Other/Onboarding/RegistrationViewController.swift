@@ -132,6 +132,17 @@ class RegistrationViewController: UIViewController {
         loginButton.addTarget(self, action: #selector(loginButtonClicked), for: .touchUpInside)
     }
     @objc func signUpButtonClicked() {
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+        usernameTextField.resignFirstResponder()
+        
+        guard let email = emailTextField.text, email.contains("@"), email.contains("."), !email.isEmpty,
+        let password = passwordTextField.text, password.count > 10, !password.isEmpty,
+              let username = usernameTextField.text, username.count > 10, !username.isEmpty else {
+            return
+        }
+        //TODO: Call the AuthManager
+        
         print(#function)
     }
     @objc func loginButtonClicked() {
