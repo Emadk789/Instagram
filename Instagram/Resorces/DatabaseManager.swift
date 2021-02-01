@@ -13,6 +13,10 @@ class DatabaseManager {
     
     private init() {}
     
+    public func canCreateNewUser(with email: String, username: String, compleation: (Bool) -> Void ) {
+        
+    }
+    
 
     
 }
