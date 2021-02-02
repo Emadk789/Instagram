@@ -33,3 +33,9 @@ extension UIView {
     }
     
 }
+
+extension String {
+    func safeKey() -> String {
+        return self.replacingOccurrences(of: "@", with: "-").replacingOccurrences(of: ".", with: "-")
+    }
+}

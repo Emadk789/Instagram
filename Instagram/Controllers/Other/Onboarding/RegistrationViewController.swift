@@ -142,6 +142,14 @@ class RegistrationViewController: UIViewController {
             return
         }
         //TODO: Call the AuthManager
+        AuthManager.shared.registerNewUser(username: username, email: email, password: password) { (registered) in
+            if registered {
+                print("Yes")
+            }
+            else {
+                print("No")
+            }
+        }
         
         print(#function)
     }
