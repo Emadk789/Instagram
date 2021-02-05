@@ -12,7 +12,7 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tabBarController?.tabBar.tintColor = UIColor.label
         // Do any additional setup after loading the view.
     }
 
@@ -24,7 +24,7 @@ class HomeViewController: UIViewController {
     
     private func handelNotAuthenticated() {
         // Check auth status
-        if Auth.auth().currentUser != nil {
+        if Auth.auth().currentUser == nil {
             // Show login
             let loginViewContoller = LoginViewController()
             loginViewContoller.modalPresentationStyle = .fullScreen

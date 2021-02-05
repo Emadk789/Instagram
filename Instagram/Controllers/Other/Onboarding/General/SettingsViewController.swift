@@ -12,19 +12,21 @@ struct SettingsCellModel {
     let handler: () -> Void
 }
 
-private class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     
     private let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .systemBackground
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
     var data = [[SettingsCellModel]]()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        view.addSubview(tableView)
         setTableViewAnchors()
         configurModel()
         tableView.delegate = self
@@ -43,13 +45,51 @@ private class SettingsViewController: UIViewController {
             SettingsCellModel(title: "Log Out") {
                 [weak self] in
                 self?.logOutClicked()
+            },
+            SettingsCellModel(title: "test1") {
+                [weak self] in
+//                self?.logOutClicked()
+            },
+            SettingsCellModel(title: "test2") {
+                [weak self] in
+//                self?.logOutClicked()
+            }
+        ]
+        let sectio2 = [
+            SettingsCellModel(title: "Log Out") {
+                [weak self] in
+                self?.logOutClicked()
+            },
+            SettingsCellModel(title: "test1") {
+                [weak self] in
+//                self?.logOutClicked()
+            },
+            SettingsCellModel(title: "test2") {
+                [weak self] in
+//                self?.logOutClicked()
             }
         ]
         data.append(section)
+        data.append(sectio2)
+        
         
     }
     @objc private func logOutClicked() {
-        
+        AuthManager.shared.logOut { (loggedOut) in
+            DispatchQueue.main.async {
+                if loggedOut {
+                    let vc = LoginViewController()
+                    self.present(vc, animated: true) {
+//                        Uncomment when ready!!
+//                        self.navigationController?.popToRootViewController(animated: false)
+//                        self.tabBarController?.selectedIndex = 0
+                    }
+                }
+                else {
+                    
+                }
+            }
+        }
     }
 
 }

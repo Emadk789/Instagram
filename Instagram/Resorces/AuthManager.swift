@@ -27,6 +27,7 @@ class AuthManager {
                     
                     DatabaseManager.shared.insertNewUser(with: email, username: password) { (inserted) in
                         if inserted {
+                            
                             completion(true)
                         }
                         else {
@@ -55,20 +56,20 @@ class AuthManager {
                 completion(true)
             }
         }
-        else {
-//            Auth.auth().signinwith
-//            Auth.auth().signIn(withEmail: email, password: password) { (authResult, error) in
-//                
-//                guard authResult != nil, error == nil else {
-//                    completion(false)
-//                    return
-//                }
-//                
-//                completion(true)
-//            }
+        else {}
+    }
+    func logOut(completion: ((Bool) -> Void)) {
+        do {
+            try Auth.auth().signOut()
+            completion(true)
+            return
+        }
+        catch {
+            print(error)
+            completion(false)
+            return
         }
     }
-    
 }
 
 
