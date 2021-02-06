@@ -44,7 +44,16 @@ final class SettingsViewController: UIViewController {
         let section = [
             SettingsCellModel(title: "Log Out") {
                 [weak self] in
-                self?.logOutClicked()
+                let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want Sign Out?", preferredStyle: .actionSheet)
+                let signOutAction = UIAlertAction(title: "Sign Out", style: .destructive, handler: { (action) in
+                    self?.logOutClicked()
+                })
+                let cancelAction = UIAlertAction(title: "Cancle", style: .cancel)
+                
+                alert.addAction(signOutAction)
+                alert.addAction(cancelAction)
+                
+                self?.present(alert, animated: true)
             },
             SettingsCellModel(title: "test1") {
                 [weak self] in
@@ -109,6 +118,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         data[indexPath.section][indexPath.row].handler()
     }
 }
