@@ -88,6 +88,7 @@ final class SettingsViewController: UIViewController {
             DispatchQueue.main.async {
                 if loggedOut {
                     let vc = LoginViewController()
+                    vc.modalPresentationStyle = .fullScreen
                     self.present(vc, animated: true) {
 //                        Uncomment when ready!!
 //                        self.navigationController?.popToRootViewController(animated: false)
