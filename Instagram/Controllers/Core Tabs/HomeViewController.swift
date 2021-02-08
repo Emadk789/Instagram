@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
     
     private func handelNotAuthenticated() {
         // Check auth status
+        print("Current User", Auth.auth().currentUser, "----------------------")
         if Auth.auth().currentUser == nil {
             // Show login
             let loginViewContoller = LoginViewController()
