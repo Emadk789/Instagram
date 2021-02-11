@@ -8,6 +8,12 @@
 import UIKit
 import FirebaseAuth
 
+struct HorizontalCollectionViewModel {
+    let image: UIImage?
+    let color: UIColor?
+    let handler: ()-> Void
+}
+
 class HomeViewController: UIViewController {
 
     private let horizontalCollectionView: UICollectionView = {
@@ -17,17 +23,22 @@ class HomeViewController: UIViewController {
                                           height: 60)
         let collectionView = UICollectionView(frame: .zero,
                                               collectionViewLayout: layout)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        collectionView.register(UICollectionViewCell.self,
+                                forCellWithReuseIdentifier: "Cell")
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
+    private var horizontalCollectionViewData = [HorizontalCollectionViewModel]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.tintColor = UIColor.label
         
         addSubViews()
         configurHorizantalCollectionViewAnchors()
+        
+        configurHorizontalCollectionViewModel()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -47,9 +58,20 @@ class HomeViewController: UIViewController {
         horizontalCollectionView.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
     
+    private func configurHorizontalCollectionViewModel() {
+        for _ in 0...10 {
+        let model = HorizontalCollectionViewModel(image: nil,
+                                                  color: .systemGreen,
+                                                  handler: handeldidSelectHorizontalCollectionViewCell)
+        horizontalCollectionViewData.append(model)
+        }
+    }
+    private func handeldidSelectHorizontalCollectionViewCell() {
+        print("Yes")
+    }
+    
     private func handelNotAuthenticated() {
         // Check auth status
-        print("Current User", Auth.auth().currentUser, "----------------------")
         if Auth.auth().currentUser == nil {
             // Show login
             let loginViewContoller = LoginViewController()
@@ -65,15 +87,19 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        horizontalCollectionViewData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        cell.backgroundColor = .systemGreen
+        cell.backgroundColor = horizontalCollectionViewData[indexPath.item].color
         cell.layer.cornerRadius = cell.width/2
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        horizontalCollectionViewData[indexPath.item].handler()
+    }
     
 }
