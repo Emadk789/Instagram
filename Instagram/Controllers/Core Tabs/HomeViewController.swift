@@ -31,13 +31,28 @@ class HomeViewController: UIViewController {
     }()
     private var horizontalCollectionViewData = [HorizontalCollectionViewModel]()
     
+    private lazy var tableView: UITableView = {
+       let tableView = UITableView()
+        tableView.backgroundColor = UIColor.systemOrange
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = .none
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tabBarController?.tabBar.tintColor = UIColor.label
         
+        horizontalCollectionView.delegate = self
+        horizontalCollectionView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
+        
         addSubViews()
         configurHorizantalCollectionViewAnchors()
-        
+        configurTableViewAnchors()
         configurHorizontalCollectionViewModel()
     }
 
@@ -45,19 +60,24 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         
         handelNotAuthenticated()
-        horizontalCollectionView.delegate = self
-        horizontalCollectionView.dataSource = self
+        
     }
     private func addSubViews() {
         view.addSubview(horizontalCollectionView)
+        view.addSubview(tableView)
     }
     private func configurHorizantalCollectionViewAnchors() {
-        horizontalCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        horizontalCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         horizontalCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         horizontalCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         horizontalCollectionView.heightAnchor.constraint(equalToConstant: 60).isActive = true
     }
-    
+    private func configurTableViewAnchors() {
+        tableView.topAnchor.constraint(equalTo: horizontalCollectionView.bottomAnchor, constant: 8).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
     private func configurHorizontalCollectionViewModel() {
         for _ in 0...10 {
         let model = HorizontalCollectionViewModel(image: nil,
@@ -81,7 +101,7 @@ class HomeViewController: UIViewController {
         }
     }
 }
-
+//MARK:-- CollectionView
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
@@ -102,4 +122,20 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         horizontalCollectionViewData[indexPath.item].handler()
     }
     
+}
+//MARK:-- TableView
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        20
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
+        cell.backgroundColor = .systemIndigo
+        cell.imageView?.image = UIImage.init(systemName: "house")
+        cell.textLabel?.text = "Test Data"
+        return cell
+    }
 }
