@@ -34,7 +34,7 @@ class HomeViewController: UIViewController {
     private lazy var tableView: UITableView = {
        let tableView = UITableView()
         tableView.backgroundColor = UIColor.systemOrange
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(IGFeedPostTableViewCell.self, forCellReuseIdentifier: IGFeedPostTableViewCell.identifier)
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -132,7 +132,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         20
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: IGFeedPostTableViewCell.identifier)!
         cell.backgroundColor = .systemIndigo
         cell.imageView?.image = UIImage.init(systemName: "house")
         cell.textLabel?.text = "Test Data"
