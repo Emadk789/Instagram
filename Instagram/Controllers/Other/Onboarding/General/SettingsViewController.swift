@@ -28,7 +28,7 @@ final class SettingsViewController: UIViewController {
         
         view.addSubview(tableView)
         setTableViewAnchors()
-        configurModel()
+        configureModel()
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -40,7 +40,32 @@ final class SettingsViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
-    private func configurModel() {
+    private func configureModel() {
+
+
+        data.append([
+            SettingsCellModel(title: "Edit Profile") {
+                [weak self] in
+            },
+            SettingsCellModel(title: "Invite Friends") {
+                [weak self] in
+            },
+            SettingsCellModel(title: "Save Original Posts") {
+                [weak self] in
+            }
+        ])
+        data.append([
+            SettingsCellModel(title: "Terms of Service") {
+                [weak self] in
+            },
+            SettingsCellModel(title: "Privacy Policy") {
+                [weak self] in
+            },
+            SettingsCellModel(title: "Help & Feedback") {
+                [weak self] in
+            }
+        ])
+        
         let section = [
             SettingsCellModel(title: "Log Out") {
                 [weak self] in
@@ -48,40 +73,16 @@ final class SettingsViewController: UIViewController {
                 let signOutAction = UIAlertAction(title: "Sign Out", style: .destructive, handler: { (action) in
                     self?.logOutClicked()
                 })
-                let cancelAction = UIAlertAction(title: "Cancle", style: .cancel)
+                let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
                 
                 alert.addAction(signOutAction)
                 alert.addAction(cancelAction)
                 
                 self?.present(alert, animated: true)
             },
-            SettingsCellModel(title: "test1") {
-                [weak self] in
-//                self?.logOutClicked()
-            },
-            SettingsCellModel(title: "test2") {
-                [weak self] in
-//                self?.logOutClicked()
-            }
         ]
-        let sectio2 = [
-            SettingsCellModel(title: "Log Out") {
-                [weak self] in
-                self?.logOutClicked()
-            },
-            SettingsCellModel(title: "test1") {
-                [weak self] in
-//                self?.logOutClicked()
-            },
-            SettingsCellModel(title: "test2") {
-                [weak self] in
-//                self?.logOutClicked()
-            }
-        ]
+        
         data.append(section)
-        data.append(sectio2)
-        
-        
     }
     @objc private func logOutClicked() {
         AuthManager.shared.logOut { (loggedOut) in
@@ -116,6 +117,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         cell.textLabel?.text = data[indexPath.section][indexPath.row].title
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
