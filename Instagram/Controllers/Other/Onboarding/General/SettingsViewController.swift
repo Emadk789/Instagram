@@ -46,23 +46,29 @@ final class SettingsViewController: UIViewController {
         data.append([
             SettingsCellModel(title: "Edit Profile") {
                 [weak self] in
+                self?.editProfileClicked()
             },
             SettingsCellModel(title: "Invite Friends") {
                 [weak self] in
+                self?.inviteFriendsClicked()
             },
             SettingsCellModel(title: "Save Original Posts") {
                 [weak self] in
+                self?.savePostsClicked()
             }
         ])
         data.append([
             SettingsCellModel(title: "Terms of Service") {
                 [weak self] in
+                self?.termsOfServiceClicked()
             },
             SettingsCellModel(title: "Privacy Policy") {
                 [weak self] in
+                self?.privacyPolicy()
             },
             SettingsCellModel(title: "Help & Feedback") {
                 [weak self] in
+                self?.HelpAndFeedbackClicked()
             }
         ])
         
@@ -101,6 +107,24 @@ final class SettingsViewController: UIViewController {
                 }
             }
         }
+    }
+    @objc private func editProfileClicked() {
+        
+    }
+    @objc private func inviteFriendsClicked() {
+        
+    }
+    @objc private func savePostsClicked() {
+        
+    }
+    @objc private func termsOfServiceClicked() {
+        
+    }
+    @objc private func privacyPolicy() {
+        
+    }
+    @objc private func HelpAndFeedbackClicked() {
+        
     }
 
 }
