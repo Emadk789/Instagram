@@ -60,15 +60,15 @@ final class SettingsViewController: UIViewController {
         data.append([
             SettingsCellModel(title: "Terms of Service") {
                 [weak self] in
-                self?.termsOfServiceClicked()
+                self?.openURL(type: .terms)
             },
             SettingsCellModel(title: "Privacy Policy") {
                 [weak self] in
-                self?.privacyPolicy()
+                self?.openURL(type: .privacy)
             },
             SettingsCellModel(title: "Help & Feedback") {
                 [weak self] in
-                self?.HelpAndFeedbackClicked()
+                self?.openURL(type: .help)
             }
         ])
         
@@ -108,22 +108,29 @@ final class SettingsViewController: UIViewController {
             }
         }
     }
-    @objc private func editProfileClicked() {
+    private func editProfileClicked() {
         
     }
-    @objc private func inviteFriendsClicked() {
+    private func inviteFriendsClicked() {
         
     }
-    @objc private func savePostsClicked() {
+    private func savePostsClicked() {
         
     }
-    @objc private func termsOfServiceClicked() {
-        
+    enum SettingsURLType {
+        case terms, privacy, help
     }
-    @objc private func privacyPolicy() {
-        
-    }
-    @objc private func HelpAndFeedbackClicked() {
+    private func openURL(type: SettingsURLType) {
+        let urlString: String
+        switch type {
+        case .terms:
+            urlString = ""
+        case .privacy:
+            urlString = ""
+        case .help:
+            urlString = ""
+        }
+        guard let url = URL(string: urlString) else { return }
         
     }
 
